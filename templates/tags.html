@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% set active_page = 'tags' %}
+
+{% block body %}
+  <h1>Tags</h1>
+  <ul>
+    {% for tag, count in tags.items() %}
+      <li><a href="{{ url_for('tag', tag=tag)}}">{{ tag }}</a> ({{ count }})</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

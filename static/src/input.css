@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    html, body {
+        @apply m-0 p-0 font-sans box-border w-screen h-screen;
+    }
+    
+    *,
+    :after,
+    :before {
+    @apply box-border;
+      }
+    a {
+        @apply inline-block no-underline text-teal-900 hover:text-teal-700 focus:text-teal-700 outline-offset-2;
+      }
+      li {
+        @apply mb-2;
+      }
+    
+      h1 {@apply text-4xl font-bold mb-4; 
+      }
+      h2 {@apply text-3xl font-bold mb-3;}
+      h3 {@apply text-2xl font-bold mb-2;}
+      h4 {@apply text-xl font-bold mb-2;}
+      
+      h5 {
+        @apply text-lg font-bold mb-2;}
+      h6 {@apply text-base font-bold mb-2;
+      }
+    hr {
+        @apply bg-zinc-200;
+    }
+    
+    details {
+    @apply mb-4;
+    }
+    details > summary {
+      @apply cursor-pointer bg-zinc-200 min-w-max px-2 py-1;
+    }
+      
+    ::-webkit-scrollbar {
+        @apply w-2;
+    }
+    
+    ::-webkit-scrollbar-track {
+        @apply bg-zinc-100;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        @apply bg-zinc-200 outline-zinc-200;
+    }
+
+}

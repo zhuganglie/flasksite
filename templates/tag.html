@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% set active_page = 'tags' %}
+
+{% block body %}
+ <h1>Posts tagged with "{{ tag }}"</h1>
+  <ul>
+    {% for post in posts %}
+      <li><a href="{{ url_for('post', slug=post['slug']) }}">{{ post['title'] }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
