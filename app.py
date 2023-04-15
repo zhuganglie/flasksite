@@ -3,10 +3,22 @@ import os
 import markdown
 import frontmatter
 from datetime import datetime
+from forms import ContactForm
+from flask_mail import Message, Mail
 
 
 
 app = Flask(__name__)
+app.secret_key = 'development key'
+
+mail = Mail(app)
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'XXXXXXXXXXXXXXXXXXXX'
+app.config['MAIL_PASSWORD'] = 'your-password'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail.init_app(app)
 
 @app.context_processor
 def inject_now():
@@ -70,10 +82,24 @@ def tag(tag):
                 if not post['draft'] and tag in post['tags']:
                     posts.append(post)
     return render_template('tag.html', tag=tag, posts=posts)
-
-@app.route('/contact')   
+ 
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    return render_template('contact.html')
+    form = ContactForm()
+    if request.method == 'POST':
+        if form.validate() == False:
+            return render_template('contact.html', form=form)
+        else:
+            msg = Message(form.message.data, sender=form.email.data, recipients=[''])
+            msg.body = """ 
+From: %s <%s> 
+%s 
+""" % (form.name.data, form.email.data, form.message.data)
+            mail.send(msg)
+            return 'Form posted'
+    elif request.method == 'GET':
+        return render_template('contact.html', form=form)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
